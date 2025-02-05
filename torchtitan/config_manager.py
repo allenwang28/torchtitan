@@ -240,32 +240,49 @@ class JobConfig:
             help="How many train steps to run",
         )
         self.parser.add_argument(
-            "--training.data_parallel_replicate_degree",
+            "--data_parallel.replicate_degree",
             type=int,
             default=1,
             help="""
-            The `data_parallel_replicate_degree` argument specifies the degree of
+            The `replicate_degree` argument specifies the degree of
             data parallelism for weight replication. When this value is greater
-            than 1, weights will be replicated across `data_parallel_replicate_degree`
-            ranks. If `data_parallel_shard_degree` is also greater than 1, the parallelism
+            than 1, weights will be replicated across `replicate_degree`
+            ranks. If `data_parallel.shard_degree` is also greater than 1, the parallelism
             method used is HSDP (Hybrid Sharded Data Parallelism). Otherwise, the
             parallelism method used is DDP (Distributed Data Parallelism).
             1 means disabled.""",
         )
         self.parser.add_argument(
-            "--training.data_parallel_shard_degree",
+            "--data_parallel.shard_degree",
             type=int,
             default=-1,
             help="""
-            The `data_parallel_shard_degree` argument specifies the degree of data
+            The `shard_degree` argument specifies the degree of data
             parallelism for weight sharding. When this value is greater than 1, weights
-            will be sharded across `data_parallel_shard_degree` ranks. If
-            `data_parallel_replicate_degree` is also greater than 1, the parallelism
+            will be sharded across `shard_degree` ranks. If
+            `data_parallel.replicate_degree` is also greater than 1, the parallelism
             method used is HSDP (Hybrid Sharded Data Parallelism).  Otherwise, the
             parallelism method used is FSDP (Fully Sharded Data Parallelism).
 
             -1 means leftover ranks will be used (After DP_REPLICATE/SP/PP). Note that
             only `data_parallel_shard_degree` can be negative. 1 means disabled.""",
+        )
+        self.parser.add_argument(
+            "--data_parallel.reshard_after_forward_policy",
+            type=str,
+            default="default",
+            help="""
+            `reshard_after_forward_policy` specifies the policy for applying `reshard_after_forward`
+            within an FSDP setup. `reshard_after_forward` controls parameter behavior after forward,
+            trading off memory and communication. See torch's `fully_shard` API for more documentation
+            on `reshard_after_forward`.
+
+            The supported policies include "default", "always" and "never":
+            - "default" applies default resharding behavior, implementing "smart defaults" for known optimal
+              scenarios.
+            - "always" will enable `reshard_after_forward` for all forward passes.
+            - "never" will disable `reshard_after_forward` for all forward passes.
+            """
         )
         self.parser.add_argument(
             "--training.enable_cpu_offload",
