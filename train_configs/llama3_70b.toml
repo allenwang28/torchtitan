@@ -38,6 +38,7 @@ dataset = "c4"
 [data_parallel]
 replicate_degree = 1
 shard_degree = -1
+reshard_after_forward_policy = "default" # default / never / always
 
 [experimental]
 context_parallel_degree = 1
