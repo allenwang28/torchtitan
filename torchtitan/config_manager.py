@@ -282,7 +282,7 @@ class JobConfig:
               scenarios.
             - "always" will enable `reshard_after_forward` for all forward passes.
             - "never" will disable `reshard_after_forward` for all forward passes.
-            """
+            """,
         )
         self.parser.add_argument(
             "--training.enable_cpu_offload",
