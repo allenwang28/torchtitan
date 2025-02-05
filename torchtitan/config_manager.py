@@ -265,7 +265,7 @@ class JobConfig:
             parallelism method used is FSDP (Fully Sharded Data Parallelism).
 
             -1 means leftover ranks will be used (After DP_REPLICATE/SP/PP). Note that
-            only `data_parallel_shard_degree` can be negative. 1 means disabled.""",
+            only `data_parallel.shard_degree` can be negative. 1 means disabled.""",
         )
         self.parser.add_argument(
             "--data_parallel.reshard_after_forward_policy",
@@ -399,7 +399,7 @@ class JobConfig:
             choices=["bfloat16", "float32"],
             help="""
                 torch dtype to use for parameters when applying mixed precision via FSDP.
-                This feature only takes effect when data_parallel_shard_degree > 1
+                This feature only takes effect when data_parallel.shard_degree > 1
             """,
         )
         self.parser.add_argument(
@@ -409,7 +409,7 @@ class JobConfig:
             choices=["float32"],
             help="""
                 torch dtype to use for reductions when applying mixed precision via FSDP.
-                This feature only takes effect when data_parallel_shard_degree > 1
+                This feature only takes effect when data_parallel.shard_degree > 1
             """,
         )
         self.parser.add_argument(

@@ -48,8 +48,8 @@ def main(job_config: JobConfig):
     # init distributed
     world_size = int(os.environ["WORLD_SIZE"])
     parallel_dims = ParallelDims(
-        dp_shard=job_config.training.data_parallel_shard_degree,
-        dp_replicate=job_config.training.data_parallel_replicate_degree,
+        dp_shard=job_config.data_parallel.shard_degree,
+        dp_replicate=job_config.data_parallel.replicate_degree,
         cp=job_config.experimental.context_parallel_degree,
         tp=job_config.training.tensor_parallel_degree,
         pp=job_config.experimental.pipeline_parallel_degree,
